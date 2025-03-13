@@ -46,37 +46,6 @@ app.get('/test-db', async (req, res) => {
   }
 });
 
-// Test route for Finnhub API
-app.get('/test-finnhub', async (req, res) => {
-  try {
-    const response = await axios.get('https://finnhub.io/api/v1/quote', {
-      params: {
-        symbol: 'AAPL',
-        token: process.env.FINNHUB_API_KEY
-      }
-    });
-    res.json({ 
-      status: 'success', 
-      message: 'Finnhub API working', 
-      data: response.data 
-    });
-  } catch (error) {
-    res.status(500).json({ 
-      status: 'error', 
-      message: error.message,
-      details: error.response ? error.response.data : 'No response details'
-    });
-  }
-});
-
-app.get('/env-check', (req, res) => {
-  res.json({
-    mongoConnected: mongoose.connection.readyState === 1,
-    port: process.env.PORT,
-    finnhubKeyConfigured: !!process.env.FINNHUB_API_KEY
-  });
-});
-
 // Start server
 const port = process.env.PORT || 10000;
 app.listen(port, () => {

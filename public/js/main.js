@@ -174,12 +174,15 @@ function updateTradesTable(trades) {
           ${formattedGainLoss} (${formattedGainLossPercent})
         </td>
         <td>
-          <button class="btn btn-danger btn-sm sell-button" 
-                  data-ticker="${ticker}" 
-                  data-quantity="${quantity}" 
-                  data-price="${currentPrice}">
-            Sell
+          <button class="btn btn-primary edit-trade-btn" 
+                  data-id="${trade._id}"
+                  data-ticker="${ticker}"
+                  data-quantity="${quantity}"
+                  data-price="${purchasePrice}"
+                  data-date="${trade.purchaseDate}">
+            Edit
           </button>
+          <button class="btn btn-danger sell-btn" data-id="${trade._id}">Sell</button>
         </td>
       `;
       
@@ -187,7 +190,7 @@ function updateTradesTable(trades) {
     });
     
     // Add event listeners to sell buttons
-    const sellButtons = document.querySelectorAll('.sell-button');
+    const sellButtons = document.querySelectorAll('.sell-btn');
     sellButtons.forEach(button => {
       button.addEventListener('click', openSellModal);
     });

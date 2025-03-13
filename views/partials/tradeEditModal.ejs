@@ -1,0 +1,36 @@
+<!-- Trade Edit Modal -->
+<div id="editTradeModal" class="modal">
+  <div class="modal-content">
+    <span class="close-modal">&times;</span>
+    <h2>Edit Trade</h2>
+    
+    <form id="editTradeForm">
+      <input type="hidden" id="editTradeId">
+      
+      <div class="form-group">
+        <label for="editTicker">Ticker Symbol</label>
+        <input type="text" id="editTicker" name="ticker" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="editQuantity">Quantity</label>
+        <input type="number" id="editQuantity" name="quantity" step="0.01" min="0.01" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="editPrice">Purchase Price</label>
+        <input type="number" id="editPrice" name="purchasePrice" step="0.01" min="0.01" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="editDate">Purchase Date</label>
+        <input type="date" id="editDate" name="purchaseDate" required>
+      </div>
+      
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+        <button type="button" class="btn btn-secondary close-modal">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div> 

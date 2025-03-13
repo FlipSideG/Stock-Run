@@ -1175,4 +1175,55 @@ router.post('/sell', async (req, res) => {
   }
 });
 
+// Update a trade
+router.put('/trades/:id', async (req, res) => {
+  try {
+    console.log('[API] Updating trade:', req.params.id, req.body);
+    
+    const { ticker, quantity, purchasePrice, purchaseDate } = req.body;
+    
+    // Validate required fields
+    if (!ticker || !quantity || !purchasePrice || !purchaseDate) {
+      return res.status(400).json({ error: 'Missing required fields' });
+    }
+    
+    // Validate numeric fields
+    if (isNaN(quantity) || quantity <= 0) {
+      return res.status(400).json({ error: 'Quantity must be a positive number' });
+    }
+    
+    if (isNaN(purchasePrice) || purchasePrice <= 0) {
+      return res.status(400).json({ error: 'Purchase price must be a positive number' });
+    }
+    
+    // Find the trade
+    const trade = await Trade.findById(req.params.id);
+    
+    if (!trade) {
+      return res.status(404).json({ error: 'Trade not found' });
+    }
+    
+    // Update trade fields
+    trade.ticker = ticker.toUpperCase();
+    trade.quantity = quantity;
+    trade.purchasePrice = purchasePrice;
+    trade.purchaseDate = new Date(purchaseDate);
+    
+    // Save updated trade
+    await trade.save();
+    
+    console.log(`[API] Trade updated: ${trade._id}`);
+    
+    res.json({
+      success: true,
+      message: 'Trade updated successfully',
+      trade
+    });
+    
+  } catch (err) {
+    console.error('[API] Error updating trade:', err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
 module.exports = router; 
